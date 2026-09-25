@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="face" cx="0.42" cy="0.3" r="0.8">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.55" stop-color="#ececee"/>
+      <stop offset="1" stop-color="#cfcfd3"/>
+    </radialGradient>
+  </defs>
+  <circle cx="32" cy="32" r="29" fill="url(#face)" stroke="#34beed" stroke-width="4"/>
+  <text x="32" y="41.5" text-anchor="middle" font-family="'Arial Rounded MT Bold', 'Nunito', Arial, sans-serif" font-size="25" font-weight="900" fill="#8a8a8f" letter-spacing="-1">KC</text>
+</svg>

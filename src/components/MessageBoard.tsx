@@ -71,16 +71,16 @@ export default function MessageBoard() {
     <form onSubmit={onSubmit} className="mt-6 space-y-3">
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="block">
-          <span className="mb-1 block text-xs font-bold uppercase tracking-wide text-[#8a8a90]">Name</span>
+          <span className="mb-1 block text-xs font-bold uppercase tracking-wide text-[#6b6b72]">Name</span>
           <input name="name" required maxLength={100} autoComplete="name" className={FIELD} placeholder="Your name" />
         </label>
         <label className="block">
-          <span className="mb-1 block text-xs font-bold uppercase tracking-wide text-[#8a8a90]">Email</span>
+          <span className="mb-1 block text-xs font-bold uppercase tracking-wide text-[#6b6b72]">Email</span>
           <input name="email" type="email" required maxLength={200} autoComplete="email" className={FIELD} placeholder="you@example.com" />
         </label>
       </div>
       <label className="block">
-        <span className="mb-1 block text-xs font-bold uppercase tracking-wide text-[#8a8a90]">Message</span>
+        <span className="mb-1 block text-xs font-bold uppercase tracking-wide text-[#6b6b72]">Message</span>
         <textarea name="message" required minLength={2} maxLength={5000} rows={4} className={`${FIELD} resize-y`} placeholder="Say hi, ask about a project, or offer me a job…" />
       </label>
       {/* honeypot: hidden from people, irresistible to bots */}

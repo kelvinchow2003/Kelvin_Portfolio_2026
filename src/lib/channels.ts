@@ -1,13 +1,18 @@
-import { EMAIL, LINKS } from "./site";
+import { EDUCATION, EMAIL, LINKS, REPOS } from "./site";
 
-export type ChannelLink = { label: string; href: string; external?: boolean };
+// optional links are hidden until they have an href; the rest show "coming soon"
+export type ChannelLink = { label: string; href: string; external?: boolean; optional?: boolean };
 
 export type ChannelContent = {
   eyebrow?: string;
   summary: string;
   bullets?: string[];
   links?: ChannelLink[];
-  style?: "profile" | "forecast" | "shop" | "casefile" | "simple";
+  // tech used, shown as chips under the summary
+  stack?: string[];
+  // a screenshot or photo, e.g. { src: "/projects/ats.png", alt: "ATS dashboard" }
+  image?: { src: string; alt: string };
+  style?: "profile" | "forecast" | "shop" | "casefile" | "simple" | "tour";
   forecast?: { label: string; items: string[] }[];
   // show the Message Board form under the content
   messageBoard?: boolean;
@@ -66,6 +71,12 @@ export const channels: Channel[] = [
     iconKind: "disc",
     fixed: true,
     action: { type: "disc" },
+    // the Disc Channel "plays" the whole portfolio as a one-screen summary
+    content: {
+      style: "tour",
+      eyebrow: "Quick Tour · the one-minute version",
+      summary: "Short on time? Here's everything on this Wii in one place.",
+    },
   },
   {
     id: "mii",
@@ -80,11 +91,11 @@ export const channels: Channel[] = [
       style: "profile",
       eyebrow: "About Kelvin",
       summary:
-        "Hey, I'm Kelvin. I'm a CS Honours student at Toronto Metropolitan University (Dean's List), and over the last two-plus years of co-ops I've bounced between software development, data integration, and IT operations trying to figure out which parts of building things I like best.",
+        "Hey, I'm Kelvin. I graduated from Toronto Metropolitan University in April 2026 with a CS Honours degree (Dean's List), and across two-plus years of co-ops I bounced between software development, data integration, and IT operations trying to figure out which parts of building things I like best.",
       bullets: [
         "Turns out the answer is most of them — I like writing the script that fixes the annoying repetitive thing, just as much as designing the system around it.",
         "I care about software that actually gets used, not just software that's clever.",
-        "Outside of school/work: probably tinkering with whatever half-finished project is on my Projects channel right now.",
+        "Outside of work: probably tinkering with whatever half-finished project is on my Projects channel right now.",
       ],
     },
   },
@@ -146,6 +157,7 @@ export const channels: Channel[] = [
         "I build and run customer demos, which means I spend a lot of time making finicky hardware behave on command.",
         "I sit across pre-sales and post-sales support, so I'm usually the person translating between 'what the customer needs' and 'what the hardware can actually do.'",
       ],
+      stack: ["Machine vision", "Cognex", "Universal Robots", "Yaskawa", "Python", "PLCs"],
     },
   },
   {
@@ -202,6 +214,34 @@ export const channels: Channel[] = [
     action: { type: "external", href: LINKS.linkedin },
   },
 
+  {
+    id: "work",
+    title: "Work History",
+    page: 1,
+    row: 1,
+    col: 3,
+    accent: "#5b7fa6",
+    iconKind: "briefcase",
+    action: { type: "page", target: 2 },
+  },
+  {
+    id: "education",
+    title: "Education Channel",
+    page: 1,
+    row: 2,
+    col: 2,
+    accent: "#7a5bc4",
+    iconKind: "grad",
+    action: { type: "panel" },
+    content: {
+      style: "casefile",
+      eyebrow: [EDUCATION.school, EDUCATION.graduation].filter(Boolean).join(" · "),
+      summary: `${EDUCATION.degree}, graduated April 2026 on the ${EDUCATION.honours}, with two-plus years of co-op terms in software, data and IT along the way.`,
+      bullets: EDUCATION.coursework.length ? [`Relevant coursework: ${EDUCATION.coursework.join(", ")}.`] : undefined,
+      forecast: [{ label: "Certifications in progress", items: ["AWS Certified Developer", "Azure AI Engineer", "CISSP"] }],
+    },
+  },
+
   // ---------------- Page 2 — Work History ----------------
   {
     id: "tpa",
@@ -224,6 +264,7 @@ export const channels: Channel[] = [
         "Handled Level 1–3 support across the org, from 'my monitor won't turn on' to genuinely gnarly issues.",
         "Kept an eye on the fleet through CrowdStrike and Symantec monitoring, catching problems before they became incidents.",
       ],
+      stack: ["PowerShell", "Microsoft Intune", "Power Apps", "CrowdStrike", "Symantec"],
     },
   },
   {
@@ -247,6 +288,7 @@ export const channels: Channel[] = [
         "Built CSV/XML data pipelines to move client data between systems without anyone touching a spreadsheet.",
         "Reviewed code with the team on Git, which is where I actually learned what a good pull request looks like.",
       ],
+      stack: ["Java", "REST APIs", "AWS", "SQL", "Python", "XML / CSV", "Git"],
     },
   },
   {
@@ -268,6 +310,7 @@ export const channels: Channel[] = [
         "Resolved 200+ hardware and software tickets across Windows and Linux.",
         "Automated new-hire onboarding with PowerShell so setting up a new employee's machine stopped being an afternoon-long task.",
       ],
+      stack: ["PowerShell", "Windows", "Linux"],
     },
   },
 
@@ -291,7 +334,11 @@ export const channels: Channel[] = [
         "Built a CSV/JSON → standardized PDF pipeline that hits 100% data accuracy — no more hand-transcribing test results.",
         "Freed up roughly 20% more effective learning time by getting paperwork out of instructors' way.",
       ],
-      links: [{ label: "Live Demo", href: LINKS.lssDemo, external: true }],
+      stack: ["Python", "JavaScript", "CSV / JSON", "PDF generation"],
+      links: [
+        { label: "Live Demo", href: LINKS.lssDemo, external: true },
+        { label: "Source Code", href: REPOS.lss, external: true, optional: true },
+      ],
     },
   },
   {
@@ -306,14 +353,18 @@ export const channels: Channel[] = [
     action: { type: "panel" },
     content: {
       style: "casefile",
-      eyebrow: "Next.js · TypeScript · Supabase · Tailwind",
+      eyebrow: "Full-stack web app",
       summary:
         "A resume-vs-job-description benchmarker that runs three engines in parallel: keyword matching, Cohere embeddings, and a Gemini-powered recruiter-style analysis.",
       bullets: [
         "Supabase auth with row-level security, so every user's history is actually private.",
         "Persistent history and animated dashboards so you can track how a resume improves over time.",
       ],
-      links: [{ label: "Live Demo", href: LINKS.atsDemo, external: true }],
+      stack: ["Next.js", "TypeScript", "Supabase", "Tailwind", "Cohere", "Gemini"],
+      links: [
+        { label: "Live Demo", href: LINKS.atsDemo, external: true },
+        { label: "Source Code", href: REPOS.ats, external: true, optional: true },
+      ],
     },
   },
   {
@@ -332,6 +383,8 @@ export const channels: Channel[] = [
       summary:
         "A coin-inspection benchmark comparing classical machine vision against an AI-based classifier on a Cognex IS8912.",
       bullets: ["Built to answer a very practical question: when does the fancy AI model actually beat the classical approach on this kind of part?"],
+      stack: ["Cognex In-Sight IS8912", "Classical vision", "AI classification"],
+      links: [{ label: "Source Code", href: REPOS.coin, external: true, optional: true }],
     },
   },
   {
@@ -349,6 +402,8 @@ export const channels: Channel[] = [
       eyebrow: "Apera AI · Allen-Bradley PLC",
       summary: "A Python socket bridge (pycomm3) connecting Apera AI's 3D vision system to an Allen-Bradley PLC.",
       bullets: ["Lets the vision system and the PLC actually talk to each other in real time instead of living in two separate worlds."],
+      stack: ["Python", "pycomm3", "TCP sockets", "Allen-Bradley PLC", "Apera AI"],
+      links: [{ label: "Source Code", href: REPOS.apera, external: true, optional: true }],
     },
   },
   {
@@ -366,6 +421,8 @@ export const channels: Channel[] = [
       eyebrow: "GUI Tool",
       summary: "A GUI tool that generates UR scripts and streamlines the spreadsheet side of a Cognex In-Sight pick pipeline.",
       bullets: ["Took a process that lived in a spreadsheet and a lot of tribal knowledge, and turned it into a few clicks."],
+      stack: ["Cognex In-Sight", "URScript", "Universal Robots"],
+      links: [{ label: "Source Code", href: REPOS.cognexur, external: true, optional: true }],
     },
   },
   {
@@ -383,6 +440,8 @@ export const channels: Channel[] = [
       eyebrow: "Robot Motion Translation",
       summary: "A central UI that controls both a Universal Robots arm and a Yaskawa robot, translating motion between the two.",
       bullets: ["Two robot ecosystems that don't naturally speak the same language, made to work together from one interface."],
+      stack: ["Universal Robots", "Yaskawa", "Motion translation"],
+      links: [{ label: "Source Code", href: REPOS.uryaskawa, external: true, optional: true }],
     },
   },
   {
@@ -400,6 +459,8 @@ export const channels: Channel[] = [
       eyebrow: "Local MCP Server",
       summary: "A local MCP server that lets Claude drive IronCAD directly — building parts from a sketch using my own parts catalog.",
       bullets: ["Basically: describe the part, watch Claude actually build it in CAD instead of just describing how to."],
+      stack: ["Model Context Protocol", "Claude", "IronCAD"],
+      links: [{ label: "Source Code", href: REPOS.ironcad, external: true, optional: true }],
     },
   },
   {
@@ -414,28 +475,15 @@ export const channels: Channel[] = [
     action: { type: "external", href: LINKS.personalSite },
     content: {
       style: "casefile",
-      eyebrow: "Next.js · React Three Fiber",
+      eyebrow: "3D web experience",
       summary: "My ocean-themed 3D personal site — a project in its own right, not just a container for the rest of these.",
-      links: [{ label: "Visit Site", href: LINKS.personalSite, external: true }],
-    },
-  },
-
-  // ---------------- Page 4 — reserved ----------------
-  {
-    id: "comingsoon1",
-    title: "Coming Soon",
-    page: 4,
-    row: 0,
-    col: 1,
-    accent: "#9aa3ad",
-    iconKind: "comingsoon",
-    action: { type: "panel" },
-    content: {
-      style: "simple",
-      eyebrow: "Reserved slot",
-      summary: "More channels land here as I finish more things worth showing.",
+      stack: ["Next.js", "React Three Fiber", "Three.js"],
+      links: [
+        { label: "Visit Site", href: LINKS.personalSite, external: true },
+        { label: "Source Code", href: REPOS.personalSite, external: true, optional: true },
+      ],
     },
   },
 ];
 
-export const TOTAL_PAGES = 4;
+export const TOTAL_PAGES = 3;

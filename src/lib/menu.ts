@@ -3,7 +3,8 @@
 
 export type MenuCommand =
   | { type: "home" } // Wii button: close everything, back to page 1
-  | { type: "open"; id: string }; // open a channel's content directly
+  | { type: "open"; id: string } // open a channel's content directly
+  | { type: "page"; page: number }; // close everything and show a menu page
 
 const MENU_EVENT = "wii:menu";
 
@@ -16,6 +17,10 @@ export function onMenu(handler: (cmd: MenuCommand) => void) {
   window.addEventListener(MENU_EVENT, listener);
   return () => window.removeEventListener(MENU_EVENT, listener);
 }
+
+// set once the intro screen is dismissed; a session cookie (no expiry) so the
+// server can skip rendering the intro for the rest of the browser session
+export const BOOT_COOKIE = "wii_booted";
 
 // the Mail button's "1 new message" is the welcome note; once read it clears
 const MAIL_KEY = "wii:welcome-read";

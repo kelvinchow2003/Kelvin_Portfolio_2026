@@ -34,6 +34,9 @@ body {
   --sx: calc(100vw / 515);
   --sy: calc(100dvh / 388);
   --u: min(var(--sx), var(--sy));
+  /* bottom bar height in reference units; must match BAR_H in BottomBar.tsx */
+  --bar-units: 109;
+  --bar-h: max(calc(var(--sy) * var(--bar-units)), calc(var(--u) * var(--bar-units)));
   background-color: #efefef;
   /* fine horizontal scanlines of the Wii Menu backdrop */
   background-image:
@@ -641,3 +644,126 @@ body {
     animation: none;
   }
 }
+
+/* ---------- Portrait / phone layout ---------- */
+
+/* keep the query in sync with PORTRAIT_QUERY in lib/units.ts */
+.wii-portrait-menu {
+  display: none;
+  bottom: var(--bar-h);
+}
+
+@media (max-aspect-ratio: 4/5) {
+  .wii-screen {
+    /* the bar keeps its true proportions instead of stretching to fill the height */
+    --bar-h: calc(var(--u) * var(--bar-units) + env(safe-area-inset-bottom, 0px));
+  }
+  .wii-desktop-grid {
+    display: none;
+  }
+  .wii-portrait-menu {
+    display: block;
+  }
+}
+
+.wii-section-title {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: #5f6065;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* ---------- Page dots ---------- */
+
+.wii-dot {
+  background: #c9c9cd;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.15), 0 1px 0 rgba(255, 255, 255, 0.9);
+  outline: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.wii-dot:hover,
+.wii-dot:focus-visible {
+  transform: scale(1.35);
+}
+
+.wii-dot:focus-visible {
+  box-shadow: 0 0 0 2px var(--wii-cyan);
+}
+
+.wii-dot--on {
+  background: var(--wii-cyan);
+  box-shadow: 0 0 5px rgba(52, 190, 237, 0.8);
+}
+
+/* ---------- Panel extras ---------- */
+
+.wii-stack-chip {
+  background: #e7f6fc;
+  border: 1.5px solid #bfe6f5;
+}
+
+/* ---------- Intro screen ---------- */
+
+.wii-boot {
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 45%, #ffffff 0%, rgba(255, 255, 255, 0) 70%),
+    repeating-linear-gradient(to bottom, #f6f6f6 0px, #f6f6f6 2px, #ededed 2px, #ededed 3px);
+  animation: wii-panel-fade 0.3s ease;
+}
+
+.wii-boot--leaving {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.wii-boot-name {
+  font-family: var(--font-nunito), sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.6rem, 9vmin, 5.5rem);
+  line-height: 1;
+  color: transparent;
+  background: linear-gradient(180deg, #ffffff 0%, #e6f7fd 45%, #aee3f5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 0.05em #3aa6cf;
+  paint-order: stroke fill;
+  filter: drop-shadow(0 0.06em 0.05em rgba(47, 126, 166, 0.35));
+}
+
+.wii-boot-prompt {
+  animation: wii-boot-blink 1.6s ease-in-out infinite;
+}
+
+@keyframes wii-boot-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wii-boot,
+  .wii-boot-prompt {
+    animation: none;
+  }
+}
+
+/* ---------- Pointer ---------- */
+
+/* the Wii Remote's pointing hand, for mouse users */
+@media (pointer: fine) {
+  .wii-screen {
+    cursor: url("/cursor.svg") 10 2, auto;
+  }
+  .wii-screen :is(button:not(:disabled), a[href], label, select) {
+    cursor: url("/cursor.svg") 10 2, pointer;
+  }
+  .wii-screen :is(input, textarea) {
+    cursor: text;
+  }
+}
+

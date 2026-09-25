@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { u } from "@/lib/units";
 import { isMailRead, onMailRead, sendMenu } from "@/lib/menu";
+import { isMuted, onMuteChange, setMuted } from "@/lib/sound";
 
 // All geometry is in the Wii Menu's 515×388 reference frame (see lib/units).
 // The bar's cyan edge sits 281 units down; YO leaves room above it for the
-// line's glow so nothing gets clipped at the top of the SVG.
+// line's glow so nothing gets clipped at the top of the SVG. The bar's height
+// in CSS (--bar-units in globals.css) must match BAR_H.
 const YO = 2;
 const BAR_H = 388 - 281 + YO;
 const DIP = 42; // how far the centre of the bar dips below the shoulders
@@ -149,6 +151,7 @@ function WiiButton() {
       type="button"
       aria-label="Wii Menu"
       onClick={() => sendMenu({ type: "home" })}
+      data-sfx="back"
       className="wii-round-btn absolute flex items-center justify-center rounded-full"
       style={{ left: u(BTN_CX - BTN / 2), top: u(BTN_CY - BTN / 2), width: u(BTN), height: u(BTN) }}
     >
@@ -211,7 +214,7 @@ function SDCard() {
       type="button"
       aria-label="SD Card Menu: resume"
       onClick={() => sendMenu({ type: "open", id: "resume" })}
-      className="absolute outline-none transition-transform hover:scale-110 focus-visible:scale-110"
+      className="wii-sd absolute outline-none transition-transform hover:scale-110 focus-visible:scale-110"
       style={{ left: u(117), top: u(YO + 43), width: u(26), height: u(35) }}
     >
       <svg viewBox="0 0 26 35" className="h-full w-full" aria-hidden="true">
@@ -244,6 +247,33 @@ function SDCard() {
   );
 }
 
+// mirrors the SD card on the other side: turns the menu sounds on and off
+function SoundToggle() {
+  const muted = useSyncExternalStore(onMuteChange, isMuted, () => false);
+  return (
+    <button
+      type="button"
+      aria-label="Menu sounds"
+      aria-pressed={!muted}
+      onClick={() => setMuted(!muted)}
+      className="wii-sd absolute outline-none transition-transform hover:scale-110 focus-visible:scale-110"
+      style={{ right: u(117), top: u(YO + 47), width: u(28), height: u(28) }}
+    >
+      <svg viewBox="0 0 28 28" className="h-full w-full" aria-hidden="true">
+        <path d="M4 10.5h5l7-6v19l-7-6H4z" fill="#9c9c9e" stroke="#8a8a8c" strokeWidth="0.8" strokeLinejoin="round" />
+        {muted ? (
+          <path d="M19.5 10.5l6 7M25.5 10.5l-6 7" stroke="#9c9c9e" strokeWidth="2.4" strokeLinecap="round" />
+        ) : (
+          <>
+            <path d="M19.5 10a5.5 5.5 0 0 1 0 8" fill="none" stroke="#9c9c9e" strokeWidth="2.2" strokeLinecap="round" />
+            <path d="M22.5 6.5a10 10 0 0 1 0 15" fill="none" stroke="#9c9c9e" strokeWidth="2.2" strokeLinecap="round" />
+          </>
+        )}
+      </svg>
+    </button>
+  );
+}
+
 /* ---------- bar ---------- */
 
 function barPath(w: number) {
@@ -262,6 +292,7 @@ export default function BottomBar() {
     if (!el) return;
     const update = () => {
       const unit = Math.min(el.clientWidth / 515, window.innerHeight / 388);
+      if (!unit) return; // hidden or zero-size window: keep the last good size
       setDims({ w: el.clientWidth / unit, h: el.clientHeight / unit });
     };
     update();
@@ -277,7 +308,7 @@ export default function BottomBar() {
     <div
       ref={ref}
       className="absolute inset-x-0 bottom-0"
-      style={{ height: `max(calc(var(--sy) * ${BAR_H}), ${u(BAR_H)})` }}
+      style={{ height: "var(--bar-h)" }}
     >
       <svg
         className="absolute inset-0 h-full w-full"
@@ -330,6 +361,7 @@ export default function BottomBar() {
 
       <WiiButton />
       <SDCard />
+      <SoundToggle />
       <Clock />
       <MailButton />
     </div>

@@ -198,6 +198,24 @@ export default function ChannelIcon({ kind, accent }: Props) {
           <path d="M6 38c6-8 12-8 18 0s12 8 18 0 12-8 18 0" fill="none" stroke={accent} strokeWidth="4.5" strokeLinecap="round" opacity="0.6" />
         </svg>
       );
+    case "briefcase":
+      return (
+        <svg viewBox="0 0 64 64" className="h-full w-full">
+          <path d="M24 20v-4a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v4" fill="none" stroke={accent} strokeWidth="4" />
+          <rect x="10" y="20" width="44" height="32" rx="5" fill={accent} />
+          <rect x="10" y="32" width="44" height="3" fill="#eef6fb" opacity="0.7" />
+          <rect x="28" y="29" width="8" height="9" rx="1.5" fill="#eef6fb" />
+        </svg>
+      );
+    case "grad":
+      return (
+        <svg viewBox="0 0 64 64" className="h-full w-full">
+          <path d="M32 12L6 24l26 12 26-12z" fill={accent} />
+          <path d="M18 30v10c0 4 6.3 8 14 8s14-4 14-8V30l-14 6.5z" fill={accent} opacity="0.8" />
+          <path d="M52 26v14" stroke={accent} strokeWidth="3" strokeLinecap="round" />
+          <circle cx="52" cy="42" r="3" fill={accent} />
+        </svg>
+      );
     case "comingsoon":
       return (
         <svg viewBox="0 0 64 64" className="h-full w-full">

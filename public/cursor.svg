@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#d9f2fb"/>
+    </linearGradient>
+    <g id="hand">
+      <rect x="11" y="2" width="6" height="17" rx="3"/>
+      <rect x="9" y="13" width="16" height="15" rx="5"/>
+      <rect x="16.5" y="10.5" width="5" height="8" rx="2.5"/>
+      <rect x="20.5" y="12" width="4.5" height="7" rx="2.25"/>
+      <rect x="4" y="15" width="9" height="5" rx="2.5" transform="rotate(35 8.5 17.5)"/>
+    </g>
+  </defs>
+  <g transform="rotate(-15 16 16)">
+    <use href="#hand" fill="#1f6f99" stroke="#1f6f99" stroke-width="3" stroke-linejoin="round"/>
+    <use href="#hand" fill="url(#g)"/>
+    <path d="M17 11.5v5M21 13v4" stroke="#9ccfe3" stroke-width="1" stroke-linecap="round"/>
+  </g>
+</svg>

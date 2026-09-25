@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import ChannelScene from "./ChannelScene";
 import IconBanner from "./scenes/IconBanner";
 import type { Channel } from "@/lib/channels";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 type Props = {
   channel: Channel;
@@ -40,6 +41,7 @@ function SplashArrow({ dir, onClick }: { dir: "left" | "right"; onClick: () => v
       type="button"
       aria-label={dir === "left" ? "Previous channel" : "Next channel"}
       onClick={onClick}
+      data-sfx="page"
       className={`wii-arrow absolute top-1/2 z-10 h-[min(12vmin,64px)] w-[min(6.5vmin,36px)] -translate-y-1/2 outline-none ${
         dir === "left" ? "left-[1.5%]" : "right-[1.5%]"
       }`}
@@ -63,9 +65,11 @@ export default function ChannelSplash({
   startLabel = "Start",
   startDisabled = false,
 }: Props) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const leaving = useRef(false);
+  useFocusTrap(rootRef);
 
   // the Wii zooms the channel up out of its tile
   useLayoutEffect(() => {
@@ -115,7 +119,7 @@ export default function ChannelSplash({
   });
 
   return (
-    <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label={channel.title}>
+    <div ref={rootRef} className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label={channel.title}>
       <div ref={backdropRef} className="absolute inset-0 bg-black" />
 
       <div
@@ -125,7 +129,7 @@ export default function ChannelSplash({
       >
         {/* title */}
         <div className="wii-splash-top relative flex shrink-0 items-center justify-center" style={{ height: "30%" }}>
-          <h1 className="wii-splash-title wii-splash-reveal px-[4%] text-center leading-none">{channel.title}</h1>
+          <h2 className="wii-splash-title wii-splash-reveal px-[4%] text-center leading-none">{channel.title}</h2>
         </div>
 
         {/* animated banner */}
@@ -143,10 +147,10 @@ export default function ChannelSplash({
         {/* Wii Menu / Start */}
         <div className="wii-splash-bottom relative flex shrink-0 items-center justify-center" style={{ height: "26%" }}>
           <div className="wii-splash-reveal flex w-full items-center justify-center gap-[6%] px-[6%]">
-            <button type="button" onClick={backToMenu} className="wii-pill">
+            <button type="button" onClick={backToMenu} className="wii-pill" data-sfx="back">
               Wii Menu
             </button>
-            <button type="button" onClick={start} className="wii-pill" disabled={startDisabled} autoFocus={!startDisabled}>
+            <button type="button" onClick={start} className="wii-pill" data-sfx="start" disabled={startDisabled} autoFocus={!startDisabled}>
               {startLabel}
             </button>
           </div>
