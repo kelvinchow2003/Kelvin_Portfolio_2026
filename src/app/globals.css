@@ -757,10 +757,10 @@ body {
 /* the Wii Remote's pointing hand, for mouse users */
 @media (pointer: fine) {
   .wii-screen {
-    cursor: url("/cursor.svg") 10 2, auto;
+    cursor: url("/cursor.svg") 10 1, auto;
   }
   .wii-screen :is(button:not(:disabled), a[href], label, select) {
-    cursor: url("/cursor.svg") 10 2, pointer;
+    cursor: url("/cursor.svg") 10 1, pointer;
   }
   .wii-screen :is(input, textarea) {
     cursor: text;

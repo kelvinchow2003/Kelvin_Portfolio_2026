@@ -1,20 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" viewBox="0 0 36 48">
+  <!-- Wii Menu Player 1 pointer: black-outlined glove, white fading to periwinkle, "1" on the back of the hand -->
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#d9f2fb"/>
+      <stop offset=".32" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#bccdf3"/>
     </linearGradient>
-    <g id="hand">
-      <rect x="11" y="2" width="6" height="17" rx="3"/>
-      <rect x="9" y="13" width="16" height="15" rx="5"/>
-      <rect x="16.5" y="10.5" width="5" height="8" rx="2.5"/>
-      <rect x="20.5" y="12" width="4.5" height="7" rx="2.25"/>
-      <rect x="4" y="15" width="9" height="5" rx="2.5" transform="rotate(35 8.5 17.5)"/>
-    </g>
+    <path id="hand" d="M7.8 20.6V6.2a4.25 4.25 0 0 1 8.5 0v10.3a2.8 2.5 0 0 1 5.6 0a2.5 2.3 0 0 1 5 1a3.05 2.7 0 0 1 6.1 2.5V35q0 2-1.5 4L29 45q-.7 1.5-2.5 1.5H10q-1.5 0-2.2-1.5L4 38.5q-1.7-2.5-1.7-5.5v-8.5q0-3.6 3.2-3.9z"/>
   </defs>
-  <g transform="rotate(-15 16 16)">
-    <use href="#hand" fill="#1f6f99" stroke="#1f6f99" stroke-width="3" stroke-linejoin="round"/>
-    <use href="#hand" fill="url(#g)"/>
-    <path d="M17 11.5v5M21 13v4" stroke="#9ccfe3" stroke-width="1" stroke-linecap="round"/>
-  </g>
+  <use href="#hand" transform="translate(.9 1.1)" fill="#000" fill-opacity=".18" stroke="#000" stroke-opacity=".18" stroke-width="2.4" stroke-linejoin="round"/>
+  <use href="#hand" fill="url(#g)" stroke="#141414" stroke-width="2.4" stroke-linejoin="round"/>
+  <!-- finger shading and knuckle creases -->
+  <path d="M14.6 6.5v13" stroke="#dcdcdc" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M21.9 16.6v3M26.9 17.6v3" stroke="#8a8a8a" stroke-width="1" stroke-linecap="round"/>
+  <!-- player number -->
+  <path d="M16.2 32l2.4-1.9V40.4" fill="none" stroke="#3d4f8a" stroke-width="2.3" stroke-linejoin="round"/>
 </svg>
