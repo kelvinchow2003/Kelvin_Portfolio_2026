@@ -4,11 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import ChannelTile from "./ChannelTile";
 import ChannelPanel from "./ChannelPanel";
 import ChannelSplash from "./ChannelSplash";
-import DiscIntro from "./DiscIntro";
 import { channels, TOTAL_PAGES, type Channel } from "@/lib/channels";
 import { isPortraitLayout, sx, sy, u } from "@/lib/units";
 import { onMenu } from "@/lib/menu";
-import { hasLink } from "@/lib/site";
+import { LINKS, hasLink } from "@/lib/site";
 
 const COLS = 4;
 const ROWS = 3;
@@ -164,7 +163,6 @@ export default function WiiGrid() {
   const [page, setPage] = useState(1);
   const [openChannel, setOpenChannel] = useState<Channel | null>(null);
   const [splash, setSplash] = useState<{ channel: Channel; origin: DOMRect | null } | null>(null);
-  const [discPlaying, setDiscPlaying] = useState(false);
   const swipe = useRef<{ x: number; y: number } | null>(null);
 
   const goTo = useCallback((next: number) => {
@@ -204,7 +202,6 @@ export default function WiiGrid() {
   useEffect(() => {
     const sync = () => {
       setSplash(null);
-      setDiscPlaying(false);
       setOpenChannel(channelFromUrl());
     };
     const first = setTimeout(() => {
@@ -234,9 +231,6 @@ export default function WiiGrid() {
       case "page":
         goTo(channel.action.target);
         break;
-      case "disc":
-        setDiscPlaying(true);
-        break;
       case "none":
         break;
     }
@@ -247,7 +241,6 @@ export default function WiiGrid() {
     () =>
       onMenu((cmd) => {
         setSplash(null);
-        setDiscPlaying(false);
         if (cmd.type === "open") {
           const channel = channels.find((c) => c.id === cmd.id);
           if (channel?.content) openPanel(channel);
@@ -273,7 +266,7 @@ export default function WiiGrid() {
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (openChannel || splash || discPlaying || isPortraitLayout()) return;
+      if (openChannel || splash || isPortraitLayout()) return;
       // the intro screen is still up
       if (document.querySelector(".wii-boot")?.getClientRects().length) return;
       const dir = e.key as Dir;
@@ -428,6 +421,8 @@ export default function WiiGrid() {
               onNext={() => browse(1)}
               startLabel={start.label}
               startDisabled={start.kind === "none"}
+              // the portfolio "disc" ships with its save data: the résumé
+              extra={splash.channel.fixed ? { label: "Résumé", href: hasLink(LINKS.resume) ? LINKS.resume : undefined } : undefined}
               onStart={() => {
                 if (start.kind === "link") {
                   window.open(start.href, "_blank", "noopener,noreferrer");
@@ -443,14 +438,6 @@ export default function WiiGrid() {
           );
         })()}
       {openChannel && <ChannelPanel key={`panel-${openChannel.id}`} channel={openChannel} onClose={closePanel} />}
-      {discPlaying && (
-        <DiscIntro
-          onDone={() => {
-            setDiscPlaying(false);
-            openPanel(discChannel);
-          }}
-        />
-      )}
     </>
   );
 }

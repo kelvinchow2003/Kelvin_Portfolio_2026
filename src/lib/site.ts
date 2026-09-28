@@ -6,7 +6,7 @@ export const NAME = "Kelvin Chow";
 export const EMAIL = "kelvinchow2014@gmail.com";
 
 // one line under your name on the intro screen and in link previews
-export const ROLE = "Computer Science grad (TMU '26) · Applications Specialist at Shelley Automation";
+export const ROLE = "Computer Science grad (TMU '26) · Application Engineer at Shelley Automation";
 
 // optional: what you're looking for, e.g. "Open to software and automation roles in Toronto."
 export const LOOKING_FOR = "";

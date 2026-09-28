@@ -1,3 +1,4 @@
+import DiscScene from "./scenes/DiscScene";
 import ShelleyScene from "./scenes/ShelleyScene";
 import TpaScene from "./scenes/TpaScene";
 import GreenSpiegelScene from "./scenes/GreenSpiegelScene";
@@ -22,6 +23,7 @@ type Props = {
 };
 
 const SCENES: Record<ChannelSceneKind, React.ComponentType<{ variant: SceneVariant; className?: string }>> = {
+  disc: DiscScene,
   shelley: ShelleyScene,
   tpa: TpaScene,
   greenspiegel: GreenSpiegelScene,

@@ -296,26 +296,6 @@ body {
   }
 }
 
-.wii-disc-spin {
-  animation: wii-disc-spin 1.4s linear infinite;
-  box-shadow: 0 10px 30px -8px rgba(40, 42, 50, 0.4);
-}
-
-@keyframes wii-disc-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wii-disc-spin {
-    animation: none;
-  }
-}
-
 .shelley-arm {
   animation: shelley-sway 3.2s ease-in-out infinite;
 }
@@ -467,6 +447,12 @@ body {
 
 .wii-pill:active {
   transform: scale(0.97);
+}
+
+/* three pills (Wii Menu · Résumé · Start) share the bar */
+.wii-pill-row--three .wii-pill {
+  flex-basis: 27%;
+  min-width: 6rem;
 }
 
 .wii-splash-reveal {

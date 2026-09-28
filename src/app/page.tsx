@@ -34,7 +34,7 @@ const PERSON = {
   description: ROLE,
   email: `mailto:${EMAIL}`,
   url: SITE_URL || undefined,
-  jobTitle: "Applications Specialist",
+  jobTitle: "Application Engineer",
   worksFor: { "@type": "Organization", name: "Shelley Automation" },
   alumniOf: { "@type": "CollegeOrUniversity", name: EDUCATION.school },
   sameAs: [LINKS.github, LINKS.linkedin, LINKS.personalSite].filter(hasLink),

@@ -12,7 +12,7 @@ const BLUE = "#0a66c2";
 const DUR = "7s";
 
 const EXPERIENCE = [
-  { letter: "S", color: "#4f9d69", org: "Shelley Automation", role: "Applications Specialist" },
+  { letter: "S", color: "#4f9d69", org: "Shelley Automation", role: "Application Engineer" },
   { letter: "P", color: "#1f9a4b", org: "Toronto Parking Authority", role: "System Support Engineer Co-op" },
   { letter: "G", color: "#6b5b3e", org: "Green and Spiegel LLP", role: "Junior IT Developer Co-op" },
   { letter: "B", color: "#8a5a2b", org: "Bothwell Accurate Co.", role: "IT Developer Co-op" },
@@ -160,7 +160,7 @@ export default function LinkedinScene({ variant, className }: Props) {
         Kelvin Chow
       </text>
       <text x="342" y="130" fontSize="7" fontWeight="600" fill="#38434f" style={{ fontFamily: "Arial, sans-serif" }}>
-        Applications Specialist · Machine Vision &amp; Robotics
+        Application Engineer · Machine Vision &amp; Robotics
       </text>
       <text x="342" y="140" fontSize="6.5" fill="#6b7780" style={{ fontFamily: "Arial, sans-serif" }}>
         CS Honours · Toronto Metropolitan University
@@ -220,7 +220,7 @@ export default function LinkedinScene({ variant, className }: Props) {
         Kelvin Chow
       </text>
       <text x="716" y="98" fontSize="6" fill="#6b7780" style={{ fontFamily: "Arial, sans-serif" }}>
-        Applications Specialist
+        Application Engineer
       </text>
       <text x="692" y="114" fontSize="7" fill="#38434f" style={{ fontFamily: "Arial, sans-serif" }}>
         New build: a vision-guided robot cell

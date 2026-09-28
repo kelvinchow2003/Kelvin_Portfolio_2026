@@ -22,10 +22,10 @@ export type ChannelAction =
   | { type: "panel" }
   | { type: "page"; target: number }
   | { type: "external"; href: string }
-  | { type: "disc" }
   | { type: "none" };
 
 export type ChannelSceneKind =
+  | "disc"
   | "shelley"
   | "tpa"
   | "greenspiegel"
@@ -69,8 +69,9 @@ export const channels: Channel[] = [
     col: 0,
     accent: "#3b82c4",
     iconKind: "disc",
+    scene: "disc",
     fixed: true,
-    action: { type: "disc" },
+    action: { type: "panel" },
     // the Disc Channel "plays" the whole portfolio as a one-screen summary
     content: {
       style: "tour",
@@ -149,7 +150,7 @@ export const channels: Channel[] = [
     action: { type: "panel" },
     content: {
       style: "casefile",
-      eyebrow: "Applications Specialist · Current role",
+      eyebrow: "Application Engineer · Current role",
       summary:
         "I work in machine vision and industrial automation — the layer between 'this robot could theoretically do that' and 'this robot is doing that on the customer's line.'",
       bullets: [

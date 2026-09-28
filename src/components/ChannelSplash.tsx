@@ -19,6 +19,8 @@ type Props = {
   onNext?: () => void;
   startLabel?: string;
   startDisabled?: boolean;
+  // a third pill between Wii Menu and Start; with no href it shows as coming soon
+  extra?: { label: string; href?: string };
 };
 
 const ZOOM_MS = 460;
@@ -64,6 +66,7 @@ export default function ChannelSplash({
   onNext,
   startLabel = "Start",
   startDisabled = false,
+  extra,
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
@@ -146,10 +149,22 @@ export default function ChannelSplash({
 
         {/* Wii Menu / Start */}
         <div className="wii-splash-bottom relative flex shrink-0 items-center justify-center" style={{ height: "26%" }}>
-          <div className="wii-splash-reveal flex w-full items-center justify-center gap-[6%] px-[6%]">
+          <div
+            className={`wii-splash-reveal flex w-full items-center justify-center px-[6%] ${extra ? "wii-pill-row--three gap-[4%]" : "gap-[6%]"}`}
+          >
             <button type="button" onClick={backToMenu} className="wii-pill" data-sfx="back">
               Wii Menu
             </button>
+            {extra &&
+              (extra.href ? (
+                <a href={extra.href} target="_blank" rel="noopener noreferrer" className="wii-pill inline-flex items-center justify-center">
+                  {extra.label}
+                </a>
+              ) : (
+                <button type="button" className="wii-pill" disabled aria-label={`${extra.label}, coming soon`} title="Coming soon">
+                  {extra.label}
+                </button>
+              ))}
             <button type="button" onClick={start} className="wii-pill" data-sfx="start" disabled={startDisabled} autoFocus={!startDisabled}>
               {startLabel}
             </button>
