@@ -334,10 +334,9 @@ export default function WiiGrid() {
             Array.from({ length: COLS * ROWS }, (_, i) => {
               const row = Math.floor(i / COLS);
               const col = i % COLS;
-              // the fixed Disc Channel is rendered separately below, pinned to
-              // the screen — every page's own (0,0) slot stays empty for it
-              if (row === 0 && col === 0) return null;
-              const channel = channels.find((c) => c.page === p && c.row === row && c.col === col) ?? null;
+              // every page opens with its own copy of the Disc Channel, which slides with the page
+              const channel =
+                row === 0 && col === 0 ? discChannel : (channels.find((c) => c.page === p && c.row === row && c.col === col) ?? null);
               return (
                 <ChannelTile
                   key={`${p}-${i}`}
@@ -355,19 +354,6 @@ export default function WiiGrid() {
             })
           )}
         </div>
-
-        {/* fixed top-left slot — never slides, never moves, just like the real console */}
-        <ChannelTile
-          channel={discChannel}
-          interactive
-          onActivate={(rect) => handleActivate(discChannel, rect)}
-          style={{
-            left: sx(GRID_LEFT),
-            top: sy(GRID_TOP),
-            width: sx(TILE_W),
-            height: sy(TILE_H),
-          }}
-        />
 
         <PageDots page={page} onPick={goTo} />
         {page > 1 && <PageArrow dir="left" onClick={() => goTo(page - 1)} />}
