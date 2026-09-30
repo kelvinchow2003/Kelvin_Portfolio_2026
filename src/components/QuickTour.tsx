@@ -6,7 +6,7 @@ import { channels, type Channel } from "@/lib/channels";
 import { sendMenu } from "@/lib/menu";
 import { EDUCATION, EMAIL, LINKS, LOOKING_FOR, NAME, ROLE } from "@/lib/site";
 
-// The Disc Channel's content: the whole portfolio on one screen, for anyone
+// The About Me channel's content: the whole portfolio on one screen, for anyone
 // who'd rather not browse channel by channel. Everything is pulled from
 // lib/channels.ts and lib/site.ts, so it stays in sync with the menu.
 

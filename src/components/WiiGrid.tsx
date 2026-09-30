@@ -126,7 +126,7 @@ function PageDots({ page, onPick }: { page: number; onPick: (p: number) => void 
 
 type Dir = "ArrowLeft" | "ArrowRight" | "ArrowUp" | "ArrowDown";
 
-// the channels you can point at on a page (the Disc Channel is on all of them)
+// the channels you can point at on a page (About Me is on all of them)
 const pointable = (p: number) => channels.filter((c) => c.fixed || c.page === p);
 
 // D-pad style: the nearest channel in that direction on the same page, or
@@ -314,7 +314,7 @@ export default function WiiGrid() {
   }
 
   const pages = Array.from({ length: TOTAL_PAGES }, (_, i) => i + 1);
-  const discChannel = channels.find((c) => c.fixed)!;
+  const aboutChannel = channels.find((c) => c.fixed)!;
 
   return (
     <>
@@ -334,9 +334,9 @@ export default function WiiGrid() {
             Array.from({ length: COLS * ROWS }, (_, i) => {
               const row = Math.floor(i / COLS);
               const col = i % COLS;
-              // every page opens with its own copy of the Disc Channel, which slides with the page
+              // every page opens with its own copy of About Me, which slides with the page
               const channel =
-                row === 0 && col === 0 ? discChannel : (channels.find((c) => c.page === p && c.row === row && c.col === col) ?? null);
+                row === 0 && col === 0 ? aboutChannel : (channels.find((c) => c.page === p && c.row === row && c.col === col) ?? null);
               return (
                 <ChannelTile
                   key={`${p}-${i}`}
@@ -407,7 +407,7 @@ export default function WiiGrid() {
               onNext={() => browse(1)}
               startLabel={start.label}
               startDisabled={start.kind === "none"}
-              // the portfolio "disc" ships with its save data: the résumé
+              // About Me also carries the résumé
               extra={splash.channel.fixed ? { label: "Résumé", href: hasLink(LINKS.resume) ? LINKS.resume : undefined } : undefined}
               onStart={() => {
                 if (start.kind === "link") {

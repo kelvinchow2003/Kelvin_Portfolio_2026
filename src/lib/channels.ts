@@ -25,7 +25,7 @@ export type ChannelAction =
   | { type: "none" };
 
 export type ChannelSceneKind =
-  | "disc"
+  | "about"
   | "shelley"
   | "tpa"
   | "greenspiegel"
@@ -62,17 +62,17 @@ export type Channel = {
 export const channels: Channel[] = [
   // ---------------- Page 1 ----------------
   {
-    id: "disc",
-    title: "Disc Channel",
+    id: "about",
+    title: "About Me",
     page: 1,
     row: 0,
     col: 0,
     accent: "#3b82c4",
-    iconKind: "disc",
-    scene: "disc",
+    iconKind: "mii",
+    scene: "about",
     fixed: true,
     action: { type: "panel" },
-    // the Disc Channel "plays" the whole portfolio as a one-screen summary
+    // About Me opens on the whole portfolio as a one-screen summary
     content: {
       style: "tour",
       eyebrow: "Quick Tour · the one-minute version",
